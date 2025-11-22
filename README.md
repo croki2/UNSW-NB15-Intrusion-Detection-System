@@ -1,151 +1,193 @@
-🚀 UNSW-NB15 Intrusion Detection System (IDS)
+## 🚀 UNSW-NB15 Intrusion Detection System (IDS)
 
-This project implements a complete Machine Learning–based Intrusion Detection System (IDS) using the UNSW-NB15 cybersecurity dataset, one of the most widely used datasets in network security research.
+A complete Machine Learning–based Intrusion Detection System built using the UNSW-NB15 cybersecurity dataset.
+The project performs data preprocessing, model training, evaluation, and prepares the system for real-time intrusion detection.
 
-The goal is to train, evaluate, and compare ML models capable of detecting network intrusions with high accuracy — and prepare the groundwork for real-time intrusion detection.
+## 📌 1. Project Overview
 
-📌 Project Objectives
+This project implements two ML models (Random Forest & XGBoost) to classify network traffic as normal or malicious, based on the UNSW-NB15 dataset (~2.5M rows).
 
-Clean and preprocess the full UNSW-NB15 dataset (~2.5M rows)
+Key capabilities:
 
-Encode categorical network features
+Load & merge the full UNSW-NB15 dataset (4 CSV parts)
 
-Train two ML models:
-
-Random Forest Classifier
-
-XGBoost Classifier
-
-Compare:
-
-Accuracy
-
-Precision, Recall, F1-score
-
-Generate:
-
-Confusion matrices
-
-Feature importance plot
-
-Save trained models for potential real-time predictions
-
-📂 Project Structure
-UNSW-NB15-Intrusion-Detection-System/
-│
-├── src/                     # Scripts (training, preprocessing)
-├── data/                    # (ignored) dataset placeholder
-├── models/                  # (ignored) trained models
-├── images/                  # confusion matrices, plots
-├── results/                 # evaluation outputs
-│
-├── ids_model.py             # Main pipeline (RF + XGBoost)
-├── predict_packet.py        # Load model & predict flows
-├── feature_importance.png   # Top features plot
-├── rf_confusion_matrix.png
-├── xgb_confusion_matrix.png
-│
-└── .gitignore
-
-
-⚠️ Large dataset and model files are excluded using .gitignore.
-
-🧹 Data Preprocessing
-
-This project includes full preprocessing:
-
-Remove rows with missing labels
+Clean and preprocess all features
 
 Encode categorical columns (proto, state, service, attack_cat)
 
-Convert numerical fields safely (errors='coerce')
+Train two ML models
 
-Merge 4 UNSW-NB15 parts
+Evaluate accuracy, precision, recall, F1-score
 
-Remove IP address fields
+Generate confusion matrices & feature importance plots
 
-Apply stratified train/test split
+Export trained models for real-time inference
 
-🤖 Models Used
-1️⃣ Random Forest
+## 📂 2. Project Structure
+```
+UNSW-NB15-Intrusion-Detection-System/
+│
+├── src/                     # Scripts (data preprocessing, ML training)
+├── data/                    # (ignored) dataset placeholder
+├── models/                  # (ignored) saved ML models
+├── images/                  # Confusion matrices & plots
+├── results/                 # Evaluation outputs
+│
+├── ids_model.py             # Full training pipeline (RF + XGBoost)
+├── predict_packet.py        # Load model and classify new flows
+├── feature_importance.png   # Top features visualization
+├── rf_confusion_matrix.png
+├── xgb_confusion_matrix.png
+│
+└── .gitignore               # Excludes large files from GitHub
+```
 
-200 estimators
+## 🧹 3. Data Preprocessing Pipeline
 
-Parallel training
+The ids_model.py script performs:
 
-Strong performance on tabular data
+## ✔️ Step 1 — Load UNSW-NB15 dataset
 
-2️⃣ XGBoost
+Loads the 4 CSV parts and merges them into a single dataframe.
 
-Optimized gradient boosting
+## ✔️ Step 2 — Clean data
 
-Excellent generalization
+Handles non-numeric columns
 
-Highly effective on large datasets
+Removes missing labels
 
-Both models achieve > 99.9% accuracy with balanced precision/recall.
+Converts numerical columns safely (errors='coerce')
 
-📊 Evaluation Metrics
+## ✔️ Step 3 — Encode categorical features
 
-The pipeline generates:
+Encodes:
 
-✔️ Accuracy
+proto
 
-✔️ Precision / Recall / F1-score
+state
 
-✔️ Confusion matrix (PNG)
+service
 
-✔️ Feature importance ranking
+attack_cat
 
-Example files:
+## ✔️ Step 4 — Feature preparation
 
-rf_confusion_matrix.png
+Removes IP fields (cannot be used for training)
 
-xgb_confusion_matrix.png
+Ensures all features are numeric
 
-📦 Trained Models
+## ✔️ Step 5 — Stratified split
 
-Models saved as:
+Preserves attack distribution between train and test sets.
 
+## 📦 4. Trained Models
+
+Models are saved inside the models/ directory:
+```
 models/
 ├── rf_ids_model.pkl
 └── xgb_ids_model.pkl
+```
+
+You can load them using predict_packet.py.
+
+## 🤖 5. Machine Learning Models
+
+Two models are trained and compared:
+
+## 1️⃣ Random Forest
+
+200 trees
+
+Robust for tabular data
+
+Fast training, good generalization
+
+## 2️⃣ XGBoost
+
+Optimized gradient boosting
+
+Excellent performance on large datasets
+
+Handles unbalanced classes well
+
+Both models achieved > 99.9% accuracy, with high precision & recall.
+
+## 📊 6. Evaluation Outputs
+
+Each model generates:
 
 
-Both can be loaded via predict_packet.py.
+## Classification report (accuracy, precision, recall, F1)
+<img width="772" height="276" alt="image" src="https://github.com/user-attachments/assets/f08acba5-3268-48ed-9303-00b6d0cefe8a" />
 
-🔮 Next Steps (Planned Enhancements)
+## Confusion matrix 
+<img width="700" height="500" alt="rf_confusion_matrix" src="https://github.com/user-attachments/assets/3174b9a0-fc6d-4b55-a406-71aecf9ecf84" />
 
-This repository will be extended with:
+## Feature importance plot 
+<img width="1000" height="600" alt="feature_importance" src="https://github.com/user-attachments/assets/c83ba9e3-4d53-453f-b6f0-c0f8cc771f7a" />
 
-Real-time packet sniffing (Scapy)
 
-Deep learning model (LSTM or 1D-CNN)
+## Below are the evaluation results of the XGBoost Classifier trained on the UNSW-NB15 dataset.
 
-REST API for predictions (FastAPI/Flask)
+## ✔️ Classification Report
+
+<img width="762" height="344" alt="image" src="https://github.com/user-attachments/assets/1f8456b1-4294-4d1e-9796-3db5abbf860c" />
+
+
+## ✔️ Confusion Matrix
+
+The confusion matrix generated by the model is available here:
+
+<img width="700" height="500" alt="xgb_confusion_matrix" src="https://github.com/user-attachments/assets/113528bb-4dc3-4ab1-b850-be812b114249" />
+
+
+## ✔️ Notes
+
+XGBoost showed excellent performance in detecting malicious flows even in minority classes.
+
+Performs better than Random Forest on complex features due to boosted tree optimization.
+
+Works efficiently with large datasets.
+
+
+## 🔮 7. Future Improvements
+
+Planned additions:
+
+Real-time packet sniffing using Scapy
+
+Deep learning models (LSTM / 1D-CNN)
+
+FastAPI/Flask REST API for live predictions
 
 Docker container for deployment
 
-Streamlit interactive dashboard
+Streamlit dashboard for visualization
 
-🧑‍💻 Running the Project
+## 🧑‍💻 8. How to Run the Project
+## ✔️ Step 1 — Download the dataset
 
-Download UNSW-NB15 dataset from the official source
+Get UNSW-NB15 from:
+https://research.unsw.edu.au/projects/unsw-nb15-dataset
 
-Place CSV files under data/
+Place the 4 CSV files into:
 
-Train models:
+data/
 
+## ✔️ Step 2 — Train the models
+```
 python ids_model.py
-
-
-Predict a new network flow:
-
+```
+## ✔️ Step 3 — Predict a new packet/flow
+```
 python predict_packet.py
+```
+## 📫 9. Contact
 
-📫 Contact
+If you are a professor or researcher working on ML or cybersecurity, feel free to reach out:
 
 El Mehdi El Afghani
-📧 elafghani1111@gmail.com
+📧 elafghani.mhd@gmail.com
 
 🔗 GitHub: https://github.com/croki2
