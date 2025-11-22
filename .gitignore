@@ -1,0 +1,12 @@
+# Ignore datasets
+UNSW-NB15_1.csv
+UNSW-NB15_2.csv
+UNSW-NB15_3.csv
+UNSW-NB15_4.csv
+NUSW-NB15_features.csv
+
+# Ignore models (optional)
+*.pkl
+
+# Ignore images (optional)
+*.png
